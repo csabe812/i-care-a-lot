@@ -20,13 +20,18 @@
 
   <div id="container">
     <ion-list>
-      <ion-item *ngFor="let patient of patients">
-        <ion-label>{{patient.name}}</ion-label>
-        <ion-button slot="end" [routerLink]="['/add-hours', patient.id]">
-          <ion-icon name="add-circle-outline" slot="end"></ion-icon>
-          Órák megadása
-        </ion-button>
-      </ion-item>
+      <ion-item-sliding *ngFor="let patient of patients">
+        <ion-item>
+          <ion-label>{{patient.name}}</ion-label>
+          <ion-button slot="end" [routerLink]="['/add-hours', patient.id]">
+            <ion-icon name="add-circle-outline" slot="end"></ion-icon>
+            Órák megadása
+          </ion-button></ion-item>
+        <ion-item-options>
+          <ion-item-option (click)="editPatient(patient)">Szerkesztés</ion-item-option>
+          <ion-item-option color="danger" (click)="deletePatient(patient.id)">Törlés</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
     <ion-button slot="end" [routerLink]="['/monthly-summary']">
       Havi áttekintő

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Havi áttekintő</ion-title>
+    <ion-title>Havi áttekintő - {{selectedMonth}}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -13,6 +13,7 @@
       <ion-title size="large">Havi áttekintő</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-button>Előző hónap</ion-button>
   <ion-list>
     <ion-item *ngFor="let patient of data">
       <ion-label>{{patient.name}}: {{patient.hours}} óra</ion-label>

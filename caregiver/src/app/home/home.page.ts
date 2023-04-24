@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicModule, IonModal } from '@ionic/angular';
+import { AlertController, IonicModule, IonModal } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -13,17 +13,19 @@ import { Patient } from './patient.model';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule, HttpClientModule],
-  providers: [ PatientService ]
+  providers: [PatientService]
 })
 export class HomePage {
   @ViewChild(IonModal) modal: IonModal;
+
+  roleMessage = '';
 
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name: string = "";
 
   patients: Patient[] = [];
 
-  constructor(private patientService: PatientService) {
+  constructor(private patientService: PatientService, private alertController: AlertController) {
 
   }
 
@@ -31,6 +33,60 @@ export class HomePage {
     this.patientService.fetchPatients().subscribe(patients => {
       this.patients = patients;
     })
+  }
+
+  async deletePatient(id: string) {
+    console.log(id);
+    const alert = await this.alertController.create({
+      header: 'Biztosan törölni szeretné?',
+      buttons: [
+        {
+          text: 'Mégsem',
+          role: 'cancel',
+          handler: () => { },
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            this.deletePatientFromDb(id);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`;
+  }
+
+  deletePatientFromDb(id: string) {
+    this.patientService.deletePatient(id).subscribe();
+    this.patients = this.patients.filter(f => f.id !== id);
+  }
+
+  async editPatient(patient: Patient) {
+    const alert = await this.alertController.create({
+      header: `Adja meg ${patient.name} új nevét`,
+      buttons: [{
+        text: 'Ok',
+        handler: (data) => {
+          this.modifyPatient(patient.id, data[0])
+        }
+      }],
+      inputs: [
+        {
+          placeholder: 'Name',
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
+  modifyPatient(id: string, newName: string) {
+    this.patientService.updatePatient(id, newName).subscribe();
   }
 
 }

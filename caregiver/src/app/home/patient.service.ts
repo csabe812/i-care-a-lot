@@ -55,4 +55,14 @@ export class PatientService {
     }));
   }
 
+  deletePatient(id:string) {
+    return this.http.delete(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`);
+  } 
+
+  updatePatient(id: string, newName: string) {
+    return this.http.patch(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`, {
+      name: newName
+    });
+  }
+
 }
