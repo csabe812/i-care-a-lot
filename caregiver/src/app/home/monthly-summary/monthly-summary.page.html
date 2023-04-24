@@ -8,12 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+
+  <ion-grid *ngIf="isLoading">
+    <ion-row class="ion-justify-content-center">
+      <ion-spinner></ion-spinner>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="!isLoading">
     <ion-row class="ion-justify-content-center">
       <ion-button color="success" (click)="showMonthData()">{{monthStatusText}} hónap -
         {{previousMonthName}}</ion-button>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="data && data.length > 0">
       <ion-col>
         <ion-list>
           <ion-item *ngFor="let patient of data">

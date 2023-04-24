@@ -28,6 +28,8 @@ export class MonthlySummaryPage implements OnInit {
   isPrevMonthActive: boolean = false;
   activeMonthNumber: number = 0;
 
+  isLoading: boolean = true;
+
   constructor(private patientService: PatientService) { }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class MonthlySummaryPage implements OnInit {
       this.patientService.fetchHours().subscribe(patientHours => {
         this.patientHours = patientHours;
         this.initData();
+        this.isLoading = false;
       });
     })
   }
@@ -96,6 +99,7 @@ export class MonthlySummaryPage implements OnInit {
     this.isPrevMonthActive = !this.isPrevMonthActive;
     this.initData();
     this.data = this.data.filter(f => f.hours > 0 && f.name && f.name.length > 0);
+    console.log(this.data);
   }
 
 }
