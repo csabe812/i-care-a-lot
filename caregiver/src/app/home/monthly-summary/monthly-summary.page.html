@@ -1,22 +1,26 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Havi áttekintő - {{selectedMonth}}</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Havi áttekintő - {{currentMonthName}}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Havi áttekintő</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-button>Előző hónap</ion-button>
-  <ion-list>
-    <ion-item *ngFor="let patient of data">
-      <ion-label>{{patient.name}}: {{patient.hours}} óra</ion-label>
-    </ion-item>
-  </ion-list>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-button color="success" (click)="showMonthData()">{{monthStatusText}} hónap -
+        {{previousMonthName}}</ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item *ngFor="let patient of data">
+            <ion-label>{{patient.name}}: {{patient.hours}} óra</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

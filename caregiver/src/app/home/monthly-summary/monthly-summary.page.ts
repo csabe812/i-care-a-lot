@@ -14,13 +14,19 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [PatientService]
 })
 export class MonthlySummaryPage implements OnInit {
+  patients: any[] = [];
+  patientHours: any[] = [];
+  patientHoursData: any[] = [];
+  data: any[] = [];
 
   monthNames = ["január", "február", "március", "április", "május", "június",
     "július", "augusztus", "szeptember", "október", "november", "december"
   ];
-  patientHoursData: any[] = [];
-  data: any[] = [];
-  selectedMonth: string = "";
+  monthStatusText: string = "";
+  currentMonthName: string = "";
+  previousMonthName: string = "";
+  isPrevMonthActive: boolean = false;
+  activeMonthNumber: number = 0;
 
   constructor(private patientService: PatientService) { }
 
@@ -28,33 +34,68 @@ export class MonthlySummaryPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.selectedMonth = this.monthNames[new Date().getMonth()];
-    console.log(this.selectedMonth);
     this.patientService.fetchPatients().subscribe(patients => {
+      this.patients = patients;
       this.patientService.fetchHours().subscribe(patientHours => {
-        for (let i of patientHours) {
-          const patientName = patients.find(f => i.patientId === f.id)?.name;
-          this.patientHoursData.push({ ...i, patientName });
-        }
-
-        for (let i of this.patientHoursData) {
-          const pati = this.data.find(f => f.name === i.patientName);
-          if (pati == null) {
-            const name = i.patientName;
-            const date = i.date;
-            this.data.push({ name, hours: 0, date });
-          }
-        }
-
-        for (let i of this.patientHoursData) {
-          const patient = this.data.find(f => f.name === i.patientName);
-          if (new Date(i.date).getMonth() === new Date().getMonth()) {
-            patient.hours += +i.hours;
-          }
-        }
-
+        this.patientHours = patientHours;
+        this.initData();
       });
     })
+  }
+
+  initData() {
+    this.initializeMonthNames();
+    this.initPatientHours();
+    this.filterPatientHoursByMonth();
+  }
+
+  initPatientHours() {
+    this.patientHoursData = [];
+    this.data = [];
+    for (let i of this.patientHours) {
+      const patientName = this.patients.find(f => i.patientId === f.id)?.name;
+      this.patientHoursData.push({ ...i, patientName });
+    }
+
+    for (let i of this.patientHoursData) {
+      const pati = this.data.find(f => f.name === i.patientName);
+      if (pati == null) {
+        const name = i.patientName;
+        const date = i.date;
+        if(name && name.length > 0) {
+          this.data.push({ name, hours: 0, date });
+        }
+      }
+    }
+  }
+
+  filterPatientHoursByMonth() {
+    for (let i of this.patientHoursData) {
+      const patient = this.data.find(f => f.name === i.patientName);
+      if (patient && new Date(i.date).getMonth() === this.activeMonthNumber) {
+        patient.hours += +i.hours;
+      }
+    }
+  }
+
+  initializeMonthNames() {
+    this.activeMonthNumber = new Date().getMonth() - (this.isPrevMonthActive ? 1 : 0);
+    this.monthStatusText = this.isPrevMonthActive ? ">> Következő" : "<< Előző";
+    this.previousMonthName = "";
+    this.currentMonthName = this.monthNames[this.activeMonthNumber];
+    if (this.activeMonthNumber === 0) {
+      this.previousMonthName = this.monthNames.at(-1) || "";
+    }
+    else {
+      const differenceNumber = !this.isPrevMonthActive ? -1 : 1;
+      this.previousMonthName = this.monthNames[this.activeMonthNumber + differenceNumber];
+    }
+  }
+
+  showMonthData() {
+    this.isPrevMonthActive = !this.isPrevMonthActive;
+    this.initData();
+    this.data = this.data.filter(f => f.hours > 0 && f.name && f.name.length > 0);
   }
 
 }

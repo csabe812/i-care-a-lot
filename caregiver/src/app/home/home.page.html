@@ -1,40 +1,40 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       Betegek
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" fill="solid" [routerLink]="['/add-patient']">
+      <ion-button color="warning" fill="solid" [routerLink]="['/add-patient']">
         Beteg felvitele
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Betegek</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <ion-list>
-      <ion-item-sliding *ngFor="let patient of patients">
-        <ion-item>
-          <ion-label>{{patient.name}}</ion-label>
-          <ion-button slot="end" [routerLink]="['/add-hours', patient.id]">
-            <ion-icon name="add-circle-outline" slot="end"></ion-icon>
-            Órák megadása
-          </ion-button></ion-item>
-        <ion-item-options>
-          <ion-item-option (click)="editPatient(patient)">Szerkesztés</ion-item-option>
-          <ion-item-option color="danger" (click)="deletePatient(patient.id)">Törlés</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-    <ion-button slot="end" [routerLink]="['/monthly-summary']">
-      Havi áttekintő
-    </ion-button>
-  </div>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item-sliding *ngFor="let patient of patients">
+            <ion-item>
+              <ion-label>{{patient.name}}</ion-label>
+              <ion-button slot="end" [routerLink]="['/add-hours', patient.id]">
+                <ion-icon name="add-circle-outline" slot="end"></ion-icon>
+                Órák megadása
+              </ion-button></ion-item>
+            <ion-item-options>
+              <ion-item-option (click)="editPatient(patient)">Szerkesztés</ion-item-option>
+              <ion-item-option color="danger" (click)="deletePatient(patient.id)">Törlés</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-button [routerLink]="['/monthly-summary']">
+        Havi áttekintő
+      </ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>
