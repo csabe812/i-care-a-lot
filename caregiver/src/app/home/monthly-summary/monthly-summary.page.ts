@@ -41,6 +41,7 @@ export class MonthlySummaryPage implements OnInit {
       this.patientService.fetchHours().subscribe(patientHours => {
         this.patientHours = patientHours;
         this.initData();
+        this.data = this.data.filter(f => f.hours > 0 && f.name && f.name.length > 0);
         this.isLoading = false;
       });
     })
@@ -65,7 +66,7 @@ export class MonthlySummaryPage implements OnInit {
       if (pati == null) {
         const name = i.patientName;
         const date = i.date;
-        if(name && name.length > 0) {
+        if (name && name.length > 0) {
           this.data.push({ name, hours: 0, date });
         }
       }

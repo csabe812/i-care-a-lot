@@ -25,17 +25,17 @@ export class PatientService {
 
   fetchPatients() {
     return this.http.get<{ [key: string]: PatientData }>('https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients.json')
-    .pipe(map(resData => {
-      const patients = [];
-      for(const key in resData) {
-        if(resData.hasOwnProperty(key)) {
-          console.log(resData[key]);
-          console.log(resData[key].name);
-          patients.push(new Patient(key, resData[key].name))
+      .pipe(map(resData => {
+        const patients = [];
+        for (const key in resData) {
+          if (resData.hasOwnProperty(key)) {
+            console.log(resData[key]);
+            console.log(resData[key].name);
+            patients.push(new Patient(key, resData[key].name))
+          }
         }
-      }
-      return patients;
-    }));
+        return patients;
+      }));
   }
 
   saveHour(patientId: string, hours: number, date: Date) {
@@ -44,25 +44,33 @@ export class PatientService {
 
   fetchHours() {
     return this.http.get<{ [key: string]: PatientHoursData }>('https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patient-hours.json')
-    .pipe(map(resData => {
-      const patientHours = [];
-      for(const key in resData) {
-        if(resData.hasOwnProperty(key)) {
-          patientHours.push(new PatientHours(key, resData[key].date, resData[key].hours, resData[key].patientId))
+      .pipe(map(resData => {
+        const patientHours = [];
+        for (const key in resData) {
+          if (resData.hasOwnProperty(key)) {
+            patientHours.push(new PatientHours(key, resData[key].date, resData[key].hours, resData[key].patientId))
+          }
         }
-      }
-      return patientHours;
-    }));
+        return patientHours;
+      }));
   }
 
-  deletePatient(id:string) {
+  deletePatient(id: string) {
     return this.http.delete(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`);
-  } 
+  }
 
   updatePatient(id: string, newName: string) {
     return this.http.patch(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`, {
       name: newName
     });
+  }
+
+  getPatientById(id: string) {
+    return this.http.get(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`);
+  }
+
+  deleteHourById(id: string) {
+    return this.http.delete(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patient-hours/${id}.json`);
   }
 
 }

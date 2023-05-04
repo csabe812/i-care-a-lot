@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Adatok - {{toolbarText}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item *ngFor="let i of patientHours">
+          <ion-label>{{i.date | date: 'yyyy.MM.dd'}} - {{i.hours}} óra</ion-label>
+          <ion-button slot="end" color="danger" (click)="deleteHour(i.id)">Törlés&nbsp;<ion-icon name="trash-outline"></ion-icon></ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

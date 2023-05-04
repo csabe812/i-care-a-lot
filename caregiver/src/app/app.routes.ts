@@ -21,5 +21,9 @@ export const routes: Routes = [
   {
     path: 'monthly-summary',
     loadComponent: () => import('./home/monthly-summary/monthly-summary.page').then( m => m.MonthlySummaryPage)
+  },
+  {
+    path: 'monthly-data-by-patient/:id',
+    loadComponent: () => import('./home/monthly-data-by-patient/monthly-data-by-patient.page').then( m => m.MonthlyDataByPatientPage)
   }
 ];
