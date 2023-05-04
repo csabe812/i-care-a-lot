@@ -28,5 +28,8 @@
         </ion-list>
       </ion-col>
     </ion-row>
+    <ion-row class="ion-justify-content-center" *ngIf="data && data.length > 0">
+      <ion-button color="success" (click)="writeToClipboard()">Adatok másolása</ion-button>
+    </ion-row>
   </ion-grid>
 </ion-content>

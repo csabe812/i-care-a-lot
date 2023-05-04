@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PatientService } from '../patient.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Clipboard } from '@capacitor/clipboard';
+import { Toast } from '@capacitor/toast';
+
 
 @Component({
   selector: 'app-monthly-summary',
@@ -102,5 +105,23 @@ export class MonthlySummaryPage implements OnInit {
     this.data = this.data.filter(f => f.hours > 0 && f.name && f.name.length > 0);
     console.log(this.data);
   }
+
+  async writeToClipboard() {
+    let clipboardData = "";
+    for(let i of this.data) {
+      const d = i.name + ": " +i.hours + " óra\n";
+      clipboardData += d;
+    }
+    await Clipboard.write({
+      string: clipboardData
+    });
+    await this.showToast();    
+  };
+
+  async showToast() {
+    await Toast.show({
+      text: 'Adatok másolása sikeres!',
+    });
+  };
 
 }
