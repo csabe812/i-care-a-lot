@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap, map } from 'rxjs';
 import { Patient } from './patient.model';
 import { PatientHours } from './patient-hours.model';
+import { environment } from 'src/environments/environment';
 
 interface PatientData {
   name: string;
@@ -20,11 +21,11 @@ export class PatientService {
   constructor(private http: HttpClient) { }
 
   savePatient(patientName: string) {
-    return this.http.post('https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients.json', { name: patientName, id: null }).pipe(tap(resData => { console.log(resData) }));
+    return this.http.post(`${environment.FIREBASE_DB_URL}patients.json`, { name: patientName, id: null }).pipe(tap(resData => { console.log(resData) }));
   }
 
   fetchPatients() {
-    return this.http.get<{ [key: string]: PatientData }>('https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients.json')
+    return this.http.get<{ [key: string]: PatientData }>(`${environment.FIREBASE_DB_URL}patients.json`)
       .pipe(map(resData => {
         const patients = [];
         for (const key in resData) {
@@ -39,11 +40,11 @@ export class PatientService {
   }
 
   saveHour(patientId: string, hours: number, date: Date) {
-    return this.http.post('https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patient-hours.json', { patientId, hours, date, id: null }).pipe(tap(resData => { console.log(resData) }));
+    return this.http.post(`${environment.FIREBASE_DB_URL}patient-hours.json`, { patientId, hours, date, id: null }).pipe(tap(resData => { console.log(resData) }));
   }
 
   fetchHours() {
-    return this.http.get<{ [key: string]: PatientHoursData }>('https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patient-hours.json')
+    return this.http.get<{ [key: string]: PatientHoursData }>(`${environment.FIREBASE_DB_URL}patient-hours.json`)
       .pipe(map(resData => {
         const patientHours = [];
         for (const key in resData) {
@@ -56,21 +57,21 @@ export class PatientService {
   }
 
   deletePatient(id: string) {
-    return this.http.delete(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`);
+    return this.http.delete(`${environment.FIREBASE_DB_URL}patients/${id}.json`);
   }
 
   updatePatient(id: string, newName: string) {
-    return this.http.patch(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`, {
+    return this.http.patch(`${environment.FIREBASE_DB_URL}patients/${id}.json`, {
       name: newName
     });
   }
 
   getPatientById(id: string) {
-    return this.http.get(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patients/${id}.json`);
+    return this.http.get(`${environment.FIREBASE_DB_URL}patients/${id}.json`);
   }
 
   deleteHourById(id: string) {
-    return this.http.delete(`https://caregiver-3c9dd-default-rtdb.europe-west1.firebasedatabase.app/patient-hours/${id}.json`);
+    return this.http.delete(`${environment.FIREBASE_DB_URL}patient-hours/${id}.json`);
   }
 
 }

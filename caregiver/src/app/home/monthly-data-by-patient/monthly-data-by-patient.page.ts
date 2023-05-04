@@ -35,7 +35,7 @@ export class MonthlyDataByPatientPage implements OnInit {
 
   async deleteHour(id: string) {
     const alert = await this.alertController.create({
-      header: 'Biztosan törölni szeretné?' + id,
+      header: 'Biztosan törölni szeretné?',
       buttons: [
         {
           text: 'Mégsem',
