@@ -87,7 +87,7 @@ export class MonthlySummaryPage implements OnInit {
 
   initializeMonthNames() {
     this.activeMonthNumber = new Date().getMonth() - (this.isPrevMonthActive ? 1 : 0);
-    this.monthStatusText = this.isPrevMonthActive ? ">> Következő" : "<< Előző";
+    this.monthStatusText = this.isPrevMonthActive ? "Következő" : "Előző";
     this.previousMonthName = "";
     this.currentMonthName = this.monthNames[this.activeMonthNumber];
     if (this.activeMonthNumber === 0) {

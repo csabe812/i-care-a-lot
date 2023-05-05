@@ -5,7 +5,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button color="warning" fill="solid" [routerLink]="['/add-patient']">
-        Beteg felvitele
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>Beteg felvitele
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -24,9 +24,9 @@
                 Órák megadása
               </ion-button></ion-item>
             <ion-item-options>
-              <ion-item-option color="success" [routerLink]="['/monthly-data-by-patient', patient.id]">Adatok</ion-item-option>
-              <ion-item-option (click)="editPatient(patient)">Szerkesztés</ion-item-option>
-              <ion-item-option color="danger" (click)="deletePatient(patient.id)">Törlés</ion-item-option>
+              <ion-item-option color="success" [routerLink]="['/monthly-data-by-patient', patient.id]"><ion-icon name="analytics-outline" slot="start"></ion-icon>Részletek</ion-item-option>
+              <ion-item-option (click)="editPatient(patient)"><ion-icon name="create-outline" slot="start"></ion-icon>Szerkesztés</ion-item-option>
+              <ion-item-option color="danger" (click)="deletePatient(patient.id)"><ion-icon name="trash-outline" slot="start"></ion-icon>Törlés</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
