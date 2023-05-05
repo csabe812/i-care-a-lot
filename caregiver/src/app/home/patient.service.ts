@@ -67,7 +67,7 @@ export class PatientService {
   }
 
   getPatientById(id: string) {
-    return this.http.get(`${environment.FIREBASE_DB_URL}patients/${id}.json`);
+    return this.http.get<PatientData>(`${environment.FIREBASE_DB_URL}patients/${id}.json`);
   }
 
   deleteHourById(id: string) {

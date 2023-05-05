@@ -5,6 +5,7 @@ import { AlertController, IonicModule } from '@ionic/angular';
 import { PatientService } from '../patient.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { Patient } from '../patient.model';
 
 @Component({
   selector: 'app-monthly-data-by-patient',
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class MonthlyDataByPatientPage implements OnInit {
   patientId: string = "";
+  patientName: string = "";
   patientHours: any[] = [];
   toolbarText = new Date().getFullYear() + "." + ((+new Date().getMonth())+1) + ". hó";
 
@@ -26,6 +28,10 @@ export class MonthlyDataByPatientPage implements OnInit {
 
   ionViewDidEnter() {
     this.patientId = ""+this.route.snapshot.paramMap.get('id');
+    this.patientService.getPatientById(this.patientId).subscribe(resp => {
+      this.patientName = resp.name;
+      //this.patientName = resp.name;
+    });
     this.patientService.fetchHours().subscribe(data => {
       const monthNow= new Date().getMonth();
       this.patientHours = data.filter(f => f.patientId === this.patientId && new Date(f.date).getMonth() === monthNow)
