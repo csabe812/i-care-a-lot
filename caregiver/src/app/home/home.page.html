@@ -16,17 +16,17 @@
     <ion-row>
       <ion-col>
         <ion-list>
-          <ion-item-sliding *ngFor="let patient of patients">
+          <ion-item-sliding *ngFor="let patient of patients; let i = index" #slidingItem>
             <ion-item>
-              <ion-label>{{patient.name}}</ion-label>
+              <ion-label>{{i+1}} - {{patient.name}}</ion-label>
               <ion-button slot="end" [routerLink]="['/add-hours', patient.id]">
-                <ion-icon name="add-circle-outline" slot="end"></ion-icon>
+                <ion-icon name="alarm-outline" slot="end"></ion-icon>
                 Órák megadása
               </ion-button></ion-item>
             <ion-item-options>
               <ion-item-option color="success" [routerLink]="['/monthly-data-by-patient', patient.id]"><ion-icon name="analytics-outline" slot="start"></ion-icon>Részletek</ion-item-option>
-              <ion-item-option (click)="editPatient(patient)"><ion-icon name="create-outline" slot="start"></ion-icon>Szerkesztés</ion-item-option>
-              <ion-item-option color="danger" (click)="deletePatient(patient.id)"><ion-icon name="trash-outline" slot="start"></ion-icon>Törlés</ion-item-option>
+              <ion-item-option (click)="editPatient(patient, slidingItem)"><ion-icon name="create-outline" slot="start"></ion-icon>Szerkesztés</ion-item-option>
+              <ion-item-option color="danger" (click)="deletePatient(patient.id, patient.name)"><ion-icon name="trash-outline" slot="start"></ion-icon>Törlés</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>

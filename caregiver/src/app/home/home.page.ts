@@ -18,8 +18,6 @@ import { Patient } from './patient.model';
 export class HomePage {
   @ViewChild(IonModal) modal: IonModal;
 
-  roleMessage = '';
-
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name: string = "";
 
@@ -35,15 +33,14 @@ export class HomePage {
     })
   }
 
-  async deletePatient(id: string) {
-    console.log(id);
+  async deletePatient(id: string, name: string) {
     const alert = await this.alertController.create({
-      header: 'Biztosan törölni szeretné?',
+      header: `Biztosan törölni szeretné ${name}-t?`,
       buttons: [
         {
           text: 'Mégsem',
           role: 'cancel',
-          handler: () => { },
+          handler: () => { console.log("Mégsem") },
         },
         {
           text: 'OK',
@@ -56,9 +53,6 @@ export class HomePage {
     });
 
     await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    this.roleMessage = `Dismissed with role: ${role}`;
   }
 
   deletePatientFromDb(id: string) {
@@ -66,13 +60,14 @@ export class HomePage {
     this.patients = this.patients.filter(f => f.id !== id);
   }
 
-  async editPatient(patient: Patient) {
+  async editPatient(patient: Patient, slidingItem: any) {
     const alert = await this.alertController.create({
       header: `Adja meg ${patient.name} új nevét`,
       buttons: [{
         text: 'Ok',
         handler: (data) => {
-          this.modifyPatient(patient.id, data[0])
+          this.modifyPatient(patient.id, data[0]);
+          slidingItem.close();
         }
       }],
       inputs: [
@@ -87,6 +82,10 @@ export class HomePage {
 
   modifyPatient(id: string, newName: string) {
     this.patientService.updatePatient(id, newName).subscribe();
+    let patient =  this.patients.find(f => f.id === id);
+    if(patient) {
+      patient.name = newName;
+    }
   }
 
 }

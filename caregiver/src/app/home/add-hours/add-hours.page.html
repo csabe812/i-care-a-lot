@@ -7,27 +7,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar color="primary">
-      <ion-title size="large">Órák megadása</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <ion-item>
-      <ion-datetime [(ngModel)]="selectedDate"></ion-datetime>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item>
-      <ion-select aria-label="hours" placeholder="Válasszon órát" [(ngModel)]="selectedHours">
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-datetime presentation="date" [(ngModel)]="selectedDate" locale="hu-HU"></ion-datetime>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="3" class="ion-margin-bottom">
+      <ion-select aria-label="hours" placeholder="Válasszon órát" [(ngModel)]="selectedHours" fill="solid">
         <ion-select-option value="1">1 óra</ion-select-option>
         <ion-select-option value="2">2 óra</ion-select-option>
         <ion-select-option value="3">3 óra</ion-select-option>
         <ion-select-option value="4">4 óra</ion-select-option>
         <ion-select-option value="5">5 óra</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-  <ion-button (click)="saveHour()"><ion-icon name="save-outline" slot="start"></ion-icon>Mentés</ion-button>
+      </ion-select></ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-button (click)="saveHour()"><ion-icon name="save-outline" slot="start"></ion-icon>Mentés</ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>
