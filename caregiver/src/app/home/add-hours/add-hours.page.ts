@@ -27,7 +27,6 @@ export class AddHoursPage implements OnInit {
 
   ionViewDidEnter() {
     this.patientId = ""+this.route.snapshot.paramMap.get('id');
-    console.log(this.patientId);
   }
 
   saveHour() {

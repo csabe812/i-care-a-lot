@@ -103,7 +103,6 @@ export class MonthlySummaryPage implements OnInit {
     this.isPrevMonthActive = !this.isPrevMonthActive;
     this.initData();
     this.data = this.data.filter(f => f.hours > 0 && f.name && f.name.length > 0);
-    console.log(this.data);
   }
 
   async writeToClipboard() {

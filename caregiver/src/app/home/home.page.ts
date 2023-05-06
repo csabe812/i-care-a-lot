@@ -23,14 +23,24 @@ export class HomePage {
 
   patients: Patient[] = [];
 
+  isLoading: boolean = true;
+
   constructor(private patientService: PatientService, private alertController: AlertController) {
 
   }
 
   ionViewDidEnter() {
-    this.patientService.fetchPatients().subscribe(patients => {
-      this.patients = patients.sort((a, b) => a.name.localeCompare(b.name));
-    })
+    this.isLoading = true;
+    try {
+      this.patientService.fetchPatients().subscribe(patients => {
+        this.patients = patients.sort((a, b) => a.name.localeCompare(b.name));
+      });
+    } catch(e) {
+      console.error(e);
+    }
+    finally {
+      this.isLoading = false;
+    }
   }
 
   async deletePatient(id: string, name: string) {
@@ -63,7 +73,12 @@ export class HomePage {
   async editPatient(patient: Patient, slidingItem: any) {
     const alert = await this.alertController.create({
       header: `Adja meg ${patient.name} új nevét`,
-      buttons: [{
+      buttons: [
+        {
+          text: 'Mégsem',
+          role: 'cancel',
+          handler: () => { console.log("Mégsem") },
+        }, {
         text: 'Ok',
         handler: (data) => {
           this.modifyPatient(patient.id, data[0]);

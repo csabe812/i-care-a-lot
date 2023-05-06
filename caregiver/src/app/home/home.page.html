@@ -12,7 +12,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid *ngIf="isLoading">
+    <ion-row class="ion-justify-content-center">
+      <ion-spinner></ion-spinner>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="!isLoading">
     <ion-row>
       <ion-col>
         <ion-list>
@@ -24,9 +29,12 @@
                 Órák megadása
               </ion-button></ion-item>
             <ion-item-options>
-              <ion-item-option color="success" [routerLink]="['/monthly-data-by-patient', patient.id]"><ion-icon name="analytics-outline" slot="start"></ion-icon>Részletek</ion-item-option>
-              <ion-item-option (click)="editPatient(patient, slidingItem)"><ion-icon name="create-outline" slot="start"></ion-icon>Szerkesztés</ion-item-option>
-              <ion-item-option color="danger" (click)="deletePatient(patient.id, patient.name)"><ion-icon name="trash-outline" slot="start"></ion-icon>Törlés</ion-item-option>
+              <ion-item-option color="success" [routerLink]="['/monthly-data-by-patient', patient.id]"><ion-icon
+                  name="analytics-outline" slot="start"></ion-icon>Részletek</ion-item-option>
+              <ion-item-option (click)="editPatient(patient, slidingItem)"><ion-icon name="create-outline"
+                  slot="start"></ion-icon>Szerkesztés</ion-item-option>
+              <ion-item-option color="danger" (click)="deletePatient(patient.id, patient.name)"><ion-icon
+                  name="trash-outline" slot="start"></ion-icon>Törlés</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>

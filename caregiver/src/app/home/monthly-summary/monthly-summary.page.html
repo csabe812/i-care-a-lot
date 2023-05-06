@@ -16,8 +16,10 @@
   </ion-grid>
   <ion-grid *ngIf="!isLoading">
     <ion-row class="ion-justify-content-center">
-      <ion-button color="success" (click)="showMonthData()"><ion-icon name="play-back-outline" slot="start" *ngIf="!isPrevMonthActive"></ion-icon>{{monthStatusText}} hónap -
-        {{previousMonthName}}<ion-icon name="play-forward-outline" slot="end" *ngIf="isPrevMonthActive"></ion-icon></ion-button>
+      <ion-button color="success" (click)="showMonthData()"><ion-icon name="play-back-outline" slot="start"
+          *ngIf="!isPrevMonthActive"></ion-icon>{{monthStatusText}} hónap -
+        {{previousMonthName}}<ion-icon name="play-forward-outline" slot="end"
+          *ngIf="isPrevMonthActive"></ion-icon></ion-button>
     </ion-row>
     <ion-row *ngIf="data && data.length > 0">
       <ion-col>
@@ -29,7 +31,8 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center" *ngIf="data && data.length > 0">
-      <ion-button color="success" (click)="writeToClipboard()"><ion-icon name="copy-outline" slot="start"></ion-icon>Adatok másolása</ion-button>
+      <ion-button color="success" (click)="writeToClipboard()"><ion-icon name="copy-outline"
+          slot="start"></ion-icon>Adatok másolása</ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

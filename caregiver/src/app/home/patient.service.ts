@@ -30,8 +30,6 @@ export class PatientService {
         const patients = [];
         for (const key in resData) {
           if (resData.hasOwnProperty(key)) {
-            console.log(resData[key]);
-            console.log(resData[key].name);
             patients.push(new Patient(key, resData[key].name))
           }
         }

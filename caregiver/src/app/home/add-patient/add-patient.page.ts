@@ -23,7 +23,6 @@ export class AddPatientPage implements OnInit {
   }
 
   savePatient() {
-    console.log(this.patientName);
     this.patientService.savePatient(this.patientName).subscribe(resp => {
       this.location.back();
     });
