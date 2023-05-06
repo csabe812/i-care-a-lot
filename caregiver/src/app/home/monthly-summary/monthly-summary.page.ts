@@ -22,6 +22,7 @@ export class MonthlySummaryPage implements OnInit {
   patientHoursData: any[] = [];
   data: any[] = [];
 
+  currentYear = new Date().getFullYear();
   monthNames = ["január", "február", "március", "április", "május", "június",
     "július", "augusztus", "szeptember", "október", "november", "december"
   ];

@@ -22,10 +22,19 @@
           *ngIf="isPrevMonthActive"></ion-icon></ion-button>
     </ion-row>
     <ion-row *ngIf="data && data.length > 0">
-      <ion-col>
+      <ion-col size="12">
         <ion-list>
           <ion-item *ngFor="let patient of data">
-            <ion-label>{{patient.name}}: {{patient.hours}} óra</ion-label>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>{{patient.name}}</ion-label>
+                </ion-col>
+                <ion-col size="6" class="ion-text-end">
+                  <ion-label><b>{{patient.hours}} óra</b></ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
         </ion-list>
       </ion-col>
@@ -33,6 +42,13 @@
     <ion-row class="ion-justify-content-center" *ngIf="data && data.length > 0">
       <ion-button color="success" (click)="writeToClipboard()"><ion-icon name="copy-outline"
           slot="start"></ion-icon>Adatok másolása</ion-button>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-text color="primary" *ngIf="!isLoading && (!data || data.length === 0)">
+        <h1>Erre a hónapra ({{currentYear}}. {{currentMonthName}}) nincs megjelenítendő adat!</h1>
+      </ion-text>
     </ion-row>
   </ion-grid>
 </ion-content>
