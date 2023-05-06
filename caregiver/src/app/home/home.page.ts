@@ -29,7 +29,7 @@ export class HomePage {
 
   ionViewDidEnter() {
     this.patientService.fetchPatients().subscribe(patients => {
-      this.patients = patients;
+      this.patients = patients.sort((a, b) => a.name.localeCompare(b.name));
     })
   }
 
